@@ -1,0 +1,34 @@
+
+#Proibisce l’accesso ai file nascosti e alle cartelle
+RedirectMatch 404 /\..*$
+
+#Impedisci di rubarti la larghezza di banda linkando alle tue immagini
+RewriteEngine on 
+RewriteCond %{HTTP_REFERER} !^$RewriteCond %{HTTP_REFERER} !^http(s)?://(www\.)?sicilianavini.com [NC]RewriteRule \.(jpg|jpeg|png|gif)$ - [NC,F,L]
+
+
+#Set default index pages
+DirectoryIndex index.php index.htm index.html home.html
+
+#Impedire lìaccesso a un determinato file “filename”; wildcards consentiti.
+<files *>
+    order allow,deny
+    deny from all
+</files>
+
+
+# Protect the htaccess file
+<Files .htaccess>
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Disable directory browsing
+Options All -Indexes
+
+
+#Denying access to a directory
+RewriteEngine On
+RewriteRule (^|/)directory(/|$) - [F]
+
+
