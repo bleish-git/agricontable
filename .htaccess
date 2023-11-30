@@ -1,0 +1,2 @@
+#Set default index pages
+DirectoryIndex index.php index.htm index.html home.html
