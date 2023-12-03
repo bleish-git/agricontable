@@ -29,6 +29,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('anag/', include('anag_utenti.urls')),
     path('info/', include('info.urls')),
+    path('', include('anag_utenti.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
