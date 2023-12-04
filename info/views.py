@@ -109,6 +109,7 @@ def section_system():
     else:
         data += 'OS Version', '%s %s' % (platform.system(), platform.release())
     if hasattr(sys, 'executable'): data += 'Executable', sys.executable
+    data += 'Version', platform.python_version()
     data += 'Build Date', platform.python_build()[1]
     data += 'Compiler', platform.python_compiler()
     if hasattr(sys, 'api_version'): data += 'Python API', sys.api_version
