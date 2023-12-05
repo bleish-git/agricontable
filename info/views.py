@@ -4,6 +4,10 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import os, sys, platform, cgi, socket, django
 
+try: from pip._internal.operations import freeze
+except ImportError: # pip < 10.0
+    from pip.operations import freeze
+
 def pyinfo():
     output  = '<!DOCTYPE html>\n'
     output += '<html>'
@@ -112,6 +116,7 @@ def section_system():
     data += 'Version', platform.python_version()
     data += 'Build Date', platform.python_build()[1]
     data += 'Compiler', platform.python_compiler()
+    data += 'Pip freeze', "\n".join(list(freeze.freeze()))
     if hasattr(sys, 'api_version'): data += 'Python API', sys.api_version
     return makecells(data)
 
