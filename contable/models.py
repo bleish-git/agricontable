@@ -15,7 +15,7 @@ class ContoCOGE (MPTTModel):
 class PncGen (models.Model):
     stato = models.CharField('Stato', max_length=30,default='',blank=True)
     datacreazione = models.DateField('Data di inserimento',default=date.today)
-    categoriaUtente = models.ForeignKey(CategorieUtente,on_delete=models.CASCADE,blank=True)
+    #categoriaUtente = models.ForeignKey(CategorieUtente,on_delete=models.CASCADE,blank=True)
 
     codice=0
     cognome=0
