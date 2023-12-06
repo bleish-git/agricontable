@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "colorfield",
     'info.apps.InfoConfig',
     'anag_utenti.apps.AnagUtentiConfig',
+    'contable.apps.ContableConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

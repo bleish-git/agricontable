@@ -1,8 +1,5 @@
 from django.db import models
 from datetime import date
-from mptt.models import MPTTModel, TreeForeignKey
-
-
 
 class CategorieUtente(models.Model): 
     codiceCategoriaUtente = models.CharField("Categoria Utente",max_length=10)
@@ -89,14 +86,7 @@ class AnagraficaUtenti(models.Model):
         return str(self.codice) + " - " + self.cognome + " " + self.nome
 
 
-class ContoCOGE (MPTTModel):    
-    idContoCOGE = models.BigAutoField(primary_key=True)
-    nome = models.CharField(max_length=2)
-    descrizione = models.CharField("Descrizione",max_length=20)
-    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
 
-    class MPTTMeta:
-        order_insertion_by = ['nome']
     
 
 
