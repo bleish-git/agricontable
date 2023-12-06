@@ -1,5 +1,6 @@
 from django.db import models
 from mptt.models import MPTTModel, TreeForeignKey
+from datetime import date
 
 class ContoCOGE (MPTTModel):    
     idContoCOGE = models.BigAutoField(primary_key=True)
