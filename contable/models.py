@@ -13,13 +13,10 @@ class ContoCOGE (MPTTModel):
 
 
 class PncGen (models.Model):
+    idPnc = models.BigAutoField(primary_key=True)
     stato = models.CharField('Stato', max_length=30,default='',blank=True)
     datacreazione = models.DateField('Data di inserimento',default=date.today)
-    #categoriaUtente = models.ForeignKey(CategorieUtente,on_delete=models.CASCADE,blank=True)
-
-    codice=0
-    cognome=0
-    nome=0
+    #tipoDoc = models.ForeignKey(TipiDoc,on_delete=models.CASCADE,blank=False)
 
     class Meta: 
         verbose_name = "Prima nota contabile"
