@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import ContoCOGE, PncGen
 
-# Register your models here.
+admin.site.register(ContoCOGE)
+admin.site.register(PncGen)
