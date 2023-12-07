@@ -11,6 +11,13 @@ class ContoCOGE (MPTTModel):
     class MPTTMeta:
         order_insertion_by = ['nome']
 
+    class Meta: 
+        verbose_name = "Conto"
+        verbose_name_plural = "Conti"
+
+    def __str__(self):
+        return str(self.nome) + " - " + self.descrizione
+
 
 class PncGen (models.Model):
     idPnc = models.BigAutoField(primary_key=True, default=0)
