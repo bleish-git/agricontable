@@ -13,7 +13,7 @@ class ContoCOGE (MPTTModel):
 
 
 class PncGen (models.Model):
-    idPnc = models.BigAutoField(primary_key=True)
+    idPnc = models.BigAutoField(primary_key=True, default=0)
     stato = models.CharField('Stato', max_length=30,default='',blank=True)
     datacreazione = models.DateField('Data di inserimento',default=date.today)
     #tipoDoc = models.ForeignKey(TipiDoc,on_delete=models.CASCADE,blank=False)
