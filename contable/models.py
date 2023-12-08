@@ -18,14 +18,14 @@ class ContoCOGE (MPTTModel):
     def __str__(self):
         return str(self.nome) + " - " + self.descrizione
 
-class TipoDocCoge ():
+class TipiDocCoge ():
     codDoc = models.CharField('Codice Documento', max_length=4,default='',blank=False)
-    DesDoc= models.CharField('Descrizione',max_length=30)
+    DesDoc = models.CharField('Descrizione',max_length=30)
     #inserire puntatore a lista di opzioni collegati ad operazioni ammesse al tipo documento
 
 class PncGen (models.Model):
     idPnc = models.BigAutoField(primary_key=True, default=0)
-    tipoDoc = models.ForeignKey(TipoDocCoge,on_delete=models.CASCADE,blank=False)
+    tipoDocCoge = models.ForeignKey(TipiDocCoge,on_delete=models.CASCADE,blank=False)
     dataPnc = models.DateField('Data Nota', blank=True)
     numPnc = models.CharFsield('Num. Nota', max_length=15,default='',blank=True)
     statoPnc = models.CharFsield('Stato', max_length=30,default='',blank=True) 
