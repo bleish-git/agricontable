@@ -18,17 +18,23 @@ class ContoCOGE (MPTTModel):
     def __str__(self):
         return str(self.nome) + " - " + self.descrizione
 
-class TipiDocCoge ():
+class PncRighe (models.Model):
+    idPnc = models.BigAutoField(primary_key=True, default=0)
+    stato = models.CharField('Stato', max_length=30,default='',blank=True)
+    datacreazione = models.DateField('Data di inserimento',default=date.today)
+    #timestamp e variazioni con indicazione utentee
+
+class TipiDocCoge (models.Model):
     codDoc = models.CharField('Codice Documento', max_length=4,default='',blank=False)
     DesDoc = models.CharField('Descrizione',max_length=30)
     #inserire puntatore a lista di opzioni collegati ad operazioni ammesse al tipo documento
 
 class PncGen (models.Model):
     idPnc = models.BigAutoField(primary_key=True, default=0)
-    #tipoDocCoge = models.ForeignKey(TipiDocCoge,on_delete=models.CASCADE,blank=False)
-    dataPnc = models.DateField('Data Nota', blank=True)
-    numPnc = models.CharFsield('Num. Nota', max_length=15,default='',blank=True)
-    statoPnc = models.CharFsield('Stato', max_length=30,default='',blank=True) 
+    tipoDocCoge = models.ForeignKey(TipiDocCoge,on_delete=models.CASCADE,blank=True)
+    dataPnc = models.DateField('Data Nota', blank=True, default=date.today)
+    numPnc = models.CharField('Num. Nota', max_length=15,default='',blank=True)
+    statoPnc = models.CharField('Stato', max_length=30,default='',blank=True) 
     dataCreazionePnc = models.DateField('Data di inserimento',default=date.today)
     #pncRiga = models.ForeignKey(PncRighe,on_delete=models.CASCADE,blank=False)
     pncRiga = models.ManyToManyField(PncRighe)
@@ -42,18 +48,13 @@ class PncGen (models.Model):
         return str(self.idPnc) + " - " + self.tipoDoc
 
 
-class PncRighe (model.Model):
+
+
+
+
+class PncTes (models.Model):
     idPnc = models.BigAutoField(primary_key=True, default=0)
     stato = models.CharField('Stato', max_length=30,default='',blank=True)
     datacreazione = models.DateField('Data di inserimento',default=date.today)
     #tipoDoc = models.ForeignKey(TipiDoc,on_delete=models.CASCADE,blank=False)
-    #timestamp e variazioni con indicazione utentee
-
-
-
-class PncTes (model.Model):
-    idPnc = models.BigAutoField(primary_key=True, default=0)
-    stato = models.CharField('Stato', max_length=30,default='',blank=True)
-    datacreazione = models.DateField('Data di inserimento',default=date.today)
-    #tipoDoc = models.ForeignKey(TipiDoc,on_delete=models.CASCADE,blank=False)
-    #timestamp e variazioni con indicazione utentee
+    #timestamp e variazioni con indicazione utentee  1
