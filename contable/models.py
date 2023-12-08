@@ -25,7 +25,7 @@ class TipiDocCoge ():
 
 class PncGen (models.Model):
     idPnc = models.BigAutoField(primary_key=True, default=0)
-    tipoDocCoge = models.ForeignKey(TipiDocCoge,on_delete=models.CASCADE,blank=False)
+    #tipoDocCoge = models.ForeignKey(TipiDocCoge,on_delete=models.CASCADE,blank=False)
     dataPnc = models.DateField('Data Nota', blank=True)
     numPnc = models.CharFsield('Num. Nota', max_length=15,default='',blank=True)
     statoPnc = models.CharFsield('Stato', max_length=30,default='',blank=True) 
