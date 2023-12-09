@@ -1,11 +1,9 @@
 from django.contrib import admin
 from .models import ContoCOGE,TipiDocCoge, PncGen, PncRighe
-#from mptt.admin import MPTTModelAdmin
 from django_mptt_admin.admin import DjangoMpttAdmin
 
-
-
-#MPTT_ADMIN_LEVEL_INDENT = 20
+class ContoCOGEAdmin (DjangoMpttAdmin):
+    search_fields = ['descrizione']
 
 class PncRigheInline(admin.TabularInline):
     model = PncRighe
@@ -21,6 +19,6 @@ class PncAdmin(admin.ModelAdmin):
 
 
 
-admin.site.register(ContoCOGE, DjangoMpttAdmin)
+admin.site.register(ContoCOGE,ContoCOGEAdmin)
 admin.site.register(TipiDocCoge)
 admin.site.register(PncGen,PncAdmin)
