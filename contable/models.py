@@ -1,6 +1,7 @@
 from django.db import models
 from mptt.models import MPTTModel, TreeForeignKey
 from datetime import date, datetime
+from  anag_utenti.models import AnagraficaUtenti 
 
 class ContoCOGE (MPTTModel):    
     nome = models.CharField(max_length=2,default='')
@@ -38,6 +39,9 @@ class PncGen (models.Model):
     dataPnc = models.DateField('Data del documento',default=date.today)
     esercizioCompetenza = models.CharField('Esercizio Contabile', max_length=4,default=str(datetime.now().year),blank=False)
     causalePnC = models.CharField('Causale', max_length=50,default='',blank=True)
+    # # competenzaDa  =models.DateField('Competenza da',  default=date.today)
+    # competenzaA =  models.DateField('Competenza A', default=datetime.strptime('31/12/2099', '%d/%m/%Y'))
+
 
     class Meta: 
         verbose_name = "Prima Nota Contabile"
@@ -51,10 +55,14 @@ class PncRighe (models.Model):
     idPnc = models.ForeignKey(PncGen,on_delete=models.CASCADE) #puntatore alla testata
     idRiga = models.CharField('ID', max_length=10,default='',blank=True)
     # tipoRiga
+    partitarioRiga = models.ForeignKey(AnagraficaUtenti,on_delete=models.CASCADE,blank=True, null=True)
     descrizioneRiga = models.CharField('Descrizione', max_length=50,default='',blank=False)
     conto = models.ForeignKey(ContoCOGE,on_delete=models.CASCADE,blank=True, null=True) # puntatore al conto COGE
     dare = models.DecimalField(max_digits=16, decimal_places=5,blank=True, null=True)
     avere = models.DecimalField(max_digits=16, decimal_places=5,blank=True, null=True)
+    competenzaDa = models.DateField('Competenza da',  default=date.today)
+    competenzaA =  models.DateField('Competenza A', default=datetime.strptime('31/12/2099', '%d/%m/%Y'))
+
     #timestamp e variazioni con indicazione utentee
 
     class Meta: 

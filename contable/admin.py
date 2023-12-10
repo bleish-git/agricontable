@@ -18,7 +18,6 @@ class PncAdmin(admin.ModelAdmin):
     search_fields = ['numPnc','tipoDocCoge']
 
 
-
 admin.site.register(ContoCOGE,ContoCOGEAdmin)
 admin.site.register(TipiDocCoge)
 admin.site.register(PncGen,PncAdmin)
