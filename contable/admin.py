@@ -3,6 +3,7 @@ from .models import ContoCOGE,TipiDocCoge, PncGen, PncRighe
 from django_mptt_admin.admin import DjangoMpttAdmin
 
 class ContoCOGEAdmin (DjangoMpttAdmin):
+    list_display = ('nome', 'descrizione',)
     search_fields = ['descrizione']
 
 class PncRigheInline(admin.TabularInline):

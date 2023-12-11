@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.shortcuts import render
 from django.http import HttpResponse
 import os, sys, platform, cgi, socket, django
+from django.conf import settings
 
 try: from pip._internal.operations import freeze
 except ImportError: # pip < 10.0
@@ -89,8 +90,14 @@ def table(html):
 
 def makecells(data):
     html = ''
+    tmp=''
     while data:
-        html += '<tr><td class="e">%s</td><td class="v">%s</td></tr>' % (data.pop(0), data.pop(0))
+        tmp = '<tr><td class="e">%s</td><td class="v">%s</td></tr>' % (data.pop(0), data.pop(0))
+        tmp = tmp.replace('enabled','<p style="color:green;">enabled</p>')
+        tmp = tmp.replace('disabled','<p style="color:red;">disabled</p>')
+        tmp = tmp.replace('True','<p style="color:green;">True</p>')
+        tmp = tmp.replace('False','<p style="color:red;">False</p>')
+        html += tmp
     return table(html)
 
 def imported(module):
@@ -116,7 +123,7 @@ def section_system():
     data += 'Version', platform.python_version()
     data += 'Build Date', platform.python_build()[1]
     data += 'Compiler', platform.python_compiler()
-    data += 'Pip freeze', "\n".join(list(freeze.freeze()))
+    data += 'Pip freeze', "<br>".join(list(freeze.freeze()))
     if hasattr(sys, 'api_version'): data += 'Python API', sys.api_version
     return makecells(data)
 
@@ -210,7 +217,16 @@ def section_socket():
 
 def section_django():
     data  = []
-    data += 'Django Version',                   django.get_version()# imported('django')
+    data += 'Django Version', django.get_version()# imported('django')
+    data += 'DEBUG', getattr(settings, "DEBUG", None)
+    data += 'BASE_DIR', getattr(settings, "BASE_DIR", None)
+    data += 'INSTALLED_APPS', getattr(settings, "INSTALLED_APPS", None)
+    data += 'STATIC_URL', getattr(settings, "STATIC_URL", None)
+    data += 'STATICFILES_DIRS', getattr(settings, "STATICFILES_DIRS", None)
+    data += 'STATIC_ROOT', getattr(settings, "STATIC_ROOT", None)
+    data += 'MEDIA_ROOT', getattr(settings, "MEDIA_ROOT", None)
+    #data += 'UrlPattern', urlpatterns
+
     return makecells(data)
 
 
