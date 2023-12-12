@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['agricontable.sicilianavini.com','127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'django_extensions',
     "admin_interface",
     "colorfield",
     'info.apps.InfoConfig',
@@ -114,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/3.2/topics/i18n/
+# https://docs.djangoproject.com/en/3.2/topics/i18n/ 
 
 LANGUAGE_CODE = 'it'
 
@@ -131,13 +132,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
+STATICFILES_DIRS = [                # active when DEBUG= True
+    BASE_DIR / "staticfiles",
 ]
 
 #STATICFILES_DIRS = (str(BASE_DIR.joinpath('static')),)
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'agricontable/staticfiles/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')  # active when DEBUG= False
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 

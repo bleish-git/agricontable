@@ -15,8 +15,19 @@ class ContoCOGE (MPTTModel):
         verbose_name = "Conto"
         verbose_name_plural = "Conti"
 
+    def antenati(self):
+        tmp=''
+        for i in self.get_ancestors():
+            tmp += i.nome + '.'
+        return tmp+self.nome    
+
     def __str__(self):
-        return str(self.nome) + " - " + self.descrizione
+        tmp=''
+        for i in self.get_ancestors():
+            tmp += i.nome + '.'
+        tmp += self.nome
+        return  tmp+" - " + self.descrizione
+        
     
 
 class TipiDocCoge (models.Model):

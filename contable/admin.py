@@ -2,8 +2,10 @@ from django.contrib import admin
 from .models import ContoCOGE,TipiDocCoge, PncGen, PncRighe
 from django_mptt_admin.admin import DjangoMpttAdmin
 
+
+
 class ContoCOGEAdmin (DjangoMpttAdmin):
-    list_display = ('nome', 'descrizione',)
+    list_display = ('antenati', 'descrizione',)
     search_fields = ['descrizione']
 
 class PncRigheInline(admin.TabularInline):
