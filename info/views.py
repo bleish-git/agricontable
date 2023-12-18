@@ -175,6 +175,7 @@ def section_database():
     data += 'DB2/Informix (ibm_db)',      imported('ibm_db')
     data += 'MSSQL (adodbapi)',           imported('adodbapi')
     data += 'MySQL (MySQL-Python)',       imported('MySQLdb')
+    data += 'MySQL (Python Connector)',   imported('mysql.connector')
     data += 'ODBC (mxODBC)',              imported('mxODBC')
     data += 'Oracle (cx_Oracle)',         imported('cx_Oracle')
     data += 'PostgreSQL (PyGreSQL)',      imported('pgdb')

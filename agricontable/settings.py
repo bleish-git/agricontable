@@ -86,10 +86,11 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-        #'ENGINE': 'django.db.backends.mysql',
+        #'ENGINE': 'django.db.backends.mysql', #commentare questa riga o la prossima
+        #'ENGINE': 'mysql.connector.django',
         #'NAME': 'sicilidagri',
         #'USER': 'sicilidagri',
-        #'PASSWORD': 'gmps1326@AGRI',
+        #'PASSWORD': 'gmps1326AGRI',
         #'HOST': 'sicilidagri.mysql.db',
     }
 }
