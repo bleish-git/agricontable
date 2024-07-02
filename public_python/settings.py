@@ -16,6 +16,11 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+#consente l'apertura di popup nello stesso dominio, evitando il blocco per il clickjacking
+SECURE_FRAME_DENY = False
+SECURE_CONTENT_TYPE_DENY = False
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -26,7 +31,10 @@ SECRET_KEY = 'django-insecure-gm5q(q6s2821e*x(d=ws6+3=zuql6l2-cfd767vzjgkdj6wp*&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost']
+if DEBUG:
+    ALLOWED_HOSTS = ['127.0.0.1','localhost']
+else:
+    ALLOWED_HOSTS = ['bleish.serv00.net']
 
 
 # Application definition
@@ -46,6 +54,7 @@ INSTALLED_APPS = [
     'info.apps.InfoConfig',
     'mptt',
     'django_mptt_admin',
+    'organizations',
 ]
 
 MIDDLEWARE = [
@@ -82,18 +91,33 @@ WSGI_APPLICATION = 'public_python.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-        #'ENGINE': 'django.db.backends.mysql',
-        #'NAME': 'm9800_agricontable',
-        #'USER': 'm9800_bleish',
-        #'PASSWORD': 'gioio,io@SERV00',
-        #'HOST':'mysql4.serv00.com',
-        #'PORT':'3306',
-        #'OPTIONS': {'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",}
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+            #'ENGINE': 'django.db.backends.mysql',
+            #'NAME': 'm9800_agricontable',
+            #'USER': 'm9800_bleish',
+            #'PASSWORD': 'gioio,io@SERV00',
+            #'HOST':'mysql4.serv00.com',
+            #'PORT':'3306',
+            #'OPTIONS': {'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",}
+        }
     }
+else:
+    DATABASES = {
+        'default': {
+            #'ENGINE': 'django.db.backends.sqlite3',
+            #'NAME': BASE_DIR / 'db.sqlite3',
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'm9800_agricontable',
+            'USER': 'm9800_bleish',
+            'PASSWORD': 'gioio,io@SERV00',
+            'HOST':'mysql4.serv00.com',
+            'PORT':'3306',
+            'OPTIONS': {'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",}
+        }
 }
 
 
@@ -132,8 +156,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 #STATIC_URL = 'static/'
-STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
+STATIC_URL = 'static/'
+MEDIA_URL = 'media/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'public', 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'public', 'media')

@@ -17,13 +17,27 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, re_path
 from django.conf import settings
+from django.conf.urls.static import static
+from organizations.backends import invitation_backend
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('info/', include('info.urls')),
-    path('anag/', include('anag_utenti.urls')),
-    path('info/', include('info.urls')),
-    #path('contable/', include('contable.urls')),
-    #path('', include('anag_utenti.urls')),
+#'from django.conf.urls.static import static' e '+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)'
+#sono aggiunti per il developmente con python manage.py runserver
 
-]
+if settings.DEBUG:
+    urlpatterns = [
+        path('admin/', admin.site.urls),
+        path('info/', include('info.urls')),
+        path('anag/', include('anag_utenti.urls')),
+        path('info/', include('info.urls')),
+        path('accounts/', include('organizations.urls')),
+        path('invitations/', include(invitation_backend().get_urls())),
+    ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+else:
+    urlpatterns = [
+        path('admin/', admin.site.urls),
+        path('info/', include('info.urls')),
+        path('anag/', include('anag_utenti.urls')),
+        path('info/', include('info.urls')),
+        path('accounts/', include('organizations.urls')),
+        path('invitations/', include(invitation_backend().get_urls())),
+    ]
