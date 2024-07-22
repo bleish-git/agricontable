@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Login Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <style>  
+  body {
+      font-family: "Lato", sans-serif;
+  }
+  
+  
+  
+  .main-head{
+      height: 150px;
+      background: #fde373;
+     
+  }
+  
+  .sidenav {
+      height: 100%;
+      background-color: #51d273;
+      overflow-x: hidden;
+      padding-top: 20px;
+  }
+  
+  
+  .main {
+      padding: 0px 10px;
+  }
+  
+  @media screen and (max-height: 450px) {
+      .sidenav {padding-top: 15px;}
+  }
+  
+  @media screen and (max-width: 450px) {
+      .login-form{
+          margin-top: 10%;
+      }
+  
+      .register-form{
+          margin-top: 10%;
+      }
+  }
+  
+  @media screen and (min-width: 768px){
+      .main{
+          margin-left: 40%; 
+      }
+  
+      .sidenav{
+          width: 40%;
+          position: fixed;
+          z-index: 1;
+          top: 0;
+          left: 0;
+      }
+  
+      .login-form{
+          margin-top: 80%;
+      }
+  
+      .register-form{
+          margin-top: 20%;
+      }
+  }
+  
+  
+  .login-main-text{
+      margin-top: 20%;
+      padding: 60px;
+      color: #fff;
+  }
+  
+  .login-main-text h3{
+      font-weight: 200;
+      color: #484848
+  }
+  
+  .btn-prim{
+      background-color: #7db04a !important;
+      color: #000;
+      border-color: #96d15b;
+  }  
+  
+  
+  .btn-sec{
+      background-color: #ebb540 !important;
+      color: #000;
+      border-color: #ffc954;
+  } 
+    </style>  
+    
+</head>
+<body>
+
+    <div class="sidenav">
+             <div class="login-main-text">
+                <center>
+                <img src="/media/logo_agricontable.png" class="img-fluid" alt="Agricontable" width="384">
+                <h3>REGISTRAZIONE UTENTE</h3>
+                </center>
+             </div>
+    </div>
+    <div class="main">
+        <div class="col-md-6 col-sm-12">
+            <div class="login-form">
+                <form action="" method="post" novalidate>
+                    {% csrf_token %}
+                    {% for fm in form %}
+                    <div class="form-group mb-4">
+                        {{ fm.label_tag }}
+                        {{ fm }}
+                        <small class="text-danger">{{ fm.errors|striptags }}</small>
+                    </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-prim">Invia</button>
+                </form>
+
+                    {% if messages %}
+                    {% for message in messages %}
+                        <small {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</small>
+                    {% endfor %}
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
