@@ -19,10 +19,11 @@ from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from organizations.backends import invitation_backend
-from registrationForm import views
+from stdForm import views
+
 
 #'from django.conf.urls.static import static' e '+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)'
-#sono aggiunti per il developmente con python manage.py runserver
+#sono aggiunti per il development con python manage.py runserver
 
 if settings.DEBUG:
     urlpatterns = [
@@ -40,6 +41,7 @@ if settings.DEBUG:
         path('userdetail/<int:id>', views.user_detail, name='userdetail'), 
         path('userdashboard/<int:id>', views.user_dashboard, name='userdashboard'), 
     ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 else:
     urlpatterns = [
         path('admin/', admin.site.urls),
@@ -58,3 +60,5 @@ else:
     ]
 #Language chooser requires 'django.middleware.locale.LocaleMiddleware' in your MIDDLEWARE to work and the following code
 urlpatterns += [path(r'^i18n/', include('django.conf.urls.i18n'))]    
+
+

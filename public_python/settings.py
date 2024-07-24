@@ -55,7 +55,7 @@ INSTALLED_APPS = [
     'mptt',
     'django_mptt_admin',
     'organizations',
-    'registrationForm',
+    'stdForm',
 ]
 
 MIDDLEWARE = [
@@ -160,6 +160,7 @@ USE_TZ = True
 #STATIC_URL = 'static/'
 STATIC_URL = 'static/'
 MEDIA_URL = 'media/'
+
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'public', 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'public', 'media')
