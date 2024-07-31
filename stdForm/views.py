@@ -5,7 +5,8 @@ from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, SetPasswordForm, UserChangeForm
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.models import User
-
+from organizations.models import OrganizationUser
+from django.contrib.auth.decorators import login_required
 
 def sign_up(request):
     if request.method == "POST":
@@ -30,7 +31,7 @@ def user_login(request):
                 if user is not None:
                     login(request, user)
                     messages.success(request, 'Login avvenuto con successo.')
-                    return HttpResponseRedirect('/profile/')
+                    return HttpResponseRedirect('/userdashboard/'+str(request.user.id))
         else:
             fm = AuthenticationForm()
         return render(request, 'stdForm/userlogin.html', {'form': fm})
@@ -108,12 +109,17 @@ def user_detail(request, id):
     else:
         return HttpResponseRedirect('/login/')
 
-def user_dashboard(request, id):
+@login_required
+def user_dashboard(request, id, idorg):
     if request.user.is_authenticated:
         pi = User.objects.get(pk=id)
         fm = EditAdminProfileForm(instance=pi)
+
+        user_organizations = OrganizationUser.objects.filter(user=request.user).select_related('organization')
+
         return render(request, 'stdForm/userdashboard.html', 
-            {'name': request.user.username,'form': fm})
+            {'name': request.user.username,'form': fm, 'organizations': user_organizations, 'default_org':idorg})
     else:
         return HttpResponseRedirect('/login/')
+
 

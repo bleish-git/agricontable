@@ -39,7 +39,7 @@ if settings.DEBUG:
         path('changepassword/', views.user_change_password, name='changepassword'),
         path('changepassword2/', views.user_change_password2, name='changepassword2'),
         path('userdetail/<int:id>', views.user_detail, name='userdetail'), 
-        path('userdashboard/<int:id>', views.user_dashboard, name='userdashboard'), 
+        path('userdashboard/<int:id>/<int:idorg>', views.user_dashboard, name='userdashboard'), 
     ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 else:
@@ -56,7 +56,7 @@ else:
         path('changepassword/', views.user_change_password, name='changepassword'),
         path('changepassword2/', views.user_change_password2, name='changepassword2'),
         path('userdetail/<int:id>', views.user_detail, name='userdetail'),
-        path('userdashboard/<int:id>', views.user_dashboard, name='userdashboard'), 
+        path('userdashboard/<int:id>/<int:idorg>', views.user_dashboard, name='userdashboard'), 
     ]
 #Language chooser requires 'django.middleware.locale.LocaleMiddleware' in your MIDDLEWARE to work and the following code
 urlpatterns += [path(r'^i18n/', include('django.conf.urls.i18n'))]    
