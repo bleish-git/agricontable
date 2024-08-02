@@ -59,6 +59,6 @@ else:
         path('userdashboard/<int:id>/<int:idorg>', views.user_dashboard, name='userdashboard'), 
     ]
 #Language chooser requires 'django.middleware.locale.LocaleMiddleware' in your MIDDLEWARE to work and the following code
-urlpatterns += [path(r'^i18n/', include('django.conf.urls.i18n'))]    
+urlpatterns += [re_path(r'^i18n/', include('django.conf.urls.i18n'))]    
 
 

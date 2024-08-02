@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'django_mptt_admin',
     'organizations',
     'stdForm',
+    'multigroup',
 ]
 
 MIDDLEWARE = [

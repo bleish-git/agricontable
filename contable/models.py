@@ -4,21 +4,7 @@ from datetime import date, datetime
 from  anag_utenti.models import AnagraficaUtenti 
 from django.utils.safestring import mark_safe
 from django.utils.html import format_html
-#from organizations.models import Organization, OrganizationUser
 
-
-#class Account(Organization):
-#    class Meta:
- #       proxy = True
- #       verbose_name = "Account"
- #       verbose_name_plural = "Accounts"
-
-
-#class AccountUser(OrganizationUser):
-#    class Meta:
- #       proxy = True
-#        verbose_name = "Utente di Sistema"
-  #      verbose_name_plural = "Utenti di Sistema"
 
 class ContoCOGE (MPTTModel):    
     nome = models.CharField(max_length=2,default='')
