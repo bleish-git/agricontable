@@ -1,13 +1,8 @@
 from django.contrib import admin
-
-# from organizations.base_admin import (
-#     BaseOwnerInline,
-#     BaseOrganizationAdmin,
-#     BaseOrganizationUserAdmin,
-#     BaseOrganizationOwnerAdmin,
-# )
-
 from .models import Gruppo, GruppoUser, GruppoOwner, GruppoInvitation
+from django import forms 
+from lib.checkfielddata import controllaCF, controllaPIVA
+
 
 class UserInline(admin.TabularInline):
     model = GruppoUser
@@ -17,20 +12,36 @@ class UserInline(admin.TabularInline):
 
 
 
+
+class PostForm(forms.ModelForm):
+    def clean(self):
+
+        result = {'cf': controllaCF(self.cleaned_data['cf']), 'piva': controllaPIVA(self.cleaned_data['piva'])}
+        nuovo_result ={}
+
+        for chiave, valore in result.items():
+            if valore:
+                nuovo_result[chiave] = valore
+        if nuovo_result:
+            raise forms.ValidationError(nuovo_result)
+
+
+
 @admin.register(Gruppo)
-class GruppoAdmin(admin.ModelAdmin):
+class GruppoAdmin(admin.ModelAdmin): 
+    form = PostForm
     inlines = [UserInline]
     #ordering = ['numPnc']
-    list_display = ('name','nomeEsteso',)
-    #inlines = (PncRigheInline,)
+    list_display = ('name','nomeEsteso','is_active')
     list_filter = ('nomeEsteso',)
-    #search_fields = ['numPnc','tipoDocCoge']
+    prepopulated_fields = {'slug': ('name',)}
 
 
 @admin.register(GruppoUser)
 class GruppoUserAdmin(admin.ModelAdmin):
-    list_display = ('user','organization',)
+    list_display = ('user','nomecompleto','organization',)
     list_filter = ('user','organization',)
+
     pass
 
 
