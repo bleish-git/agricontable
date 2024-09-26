@@ -22,6 +22,11 @@ from organizations.backends import invitation_backend
 from stdForm import views
 
 
+
+if settings.DEBUG:
+    from debug_toolbar.toolbar import debug_toolbar_urls
+
+
 #'from django.conf.urls.static import static' e '+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)'
 #sono aggiunti per il development con python manage.py runserver
 
@@ -40,7 +45,7 @@ if settings.DEBUG:
         path('changepassword2/', views.user_change_password2, name='changepassword2'),
         path('userdetail/<int:id>', views.user_detail, name='userdetail'), 
         path('userdashboard/<int:id>/<int:idorg>', views.user_dashboard, name='userdashboard'), 
-    ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + debug_toolbar_urls()
 
 else:
     urlpatterns = [
@@ -60,5 +65,13 @@ else:
     ]
 #Language chooser requires 'django.middleware.locale.LocaleMiddleware' in your MIDDLEWARE to work and the following code
 urlpatterns += [re_path(r'^i18n/', include('django.conf.urls.i18n'))]    
+
+urlpatterns += [re_path('', include(('multigroup.urls','multigroup'), namespace='multigroup'))]
+
+
+
+
+
+
 
 

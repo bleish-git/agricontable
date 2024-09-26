@@ -2,6 +2,8 @@ from django.contrib import admin
 from .models import Gruppo, GruppoUser, GruppoOwner, GruppoInvitation
 from django import forms 
 from lib.checkfielddata import controllaCF, controllaPIVA
+from django.db.models import Max
+from organizations import models
 
 
 class UserInline(admin.TabularInline):
@@ -11,9 +13,14 @@ class UserInline(admin.TabularInline):
         verbose_name_plural = "Lista utenti"
 
 
-
-
 class PostForm(forms.ModelForm):
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if hasattr(request, 'gruppo'):
+            return qs.filter(gruppo=int(request.organization.id))
+        return qs
+
+
     def clean(self):
 
         result = {'cf': controllaCF(self.cleaned_data['cf']), 'piva': controllaPIVA(self.cleaned_data['piva'])}
@@ -31,24 +38,35 @@ class PostForm(forms.ModelForm):
 class GruppoAdmin(admin.ModelAdmin): 
     form = PostForm
     inlines = [UserInline]
-    #ordering = ['numPnc']
+    ordering = ['nomeEsteso']
     list_display = ('name','nomeEsteso','is_active')
     list_filter = ('nomeEsteso',)
-    prepopulated_fields = {'slug': ('name',)}
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if hasattr(request, 'organization'):
+            return qs.filter(id=int(request.organization.id))
+        return qs
 
 @admin.register(GruppoUser)
 class GruppoUserAdmin(admin.ModelAdmin):
-    list_display = ('user','nomecompleto','organization',)
+    list_display = ('organization','user','nomecompleto',)
     list_filter = ('user','organization',)
+    filter_horizontal = ['permission',]
+    fields = (('organization','gruppo_predefinito'),('user','user_type','is_admin'), 'permission')
 
-    pass
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if hasattr(request, 'gruppo'):
+            return qs.filter(organization_id=int(request.organization.id))
+        return qs
+
 
 
 @admin.register(GruppoOwner)
 class GruppoOwnerAdmin(admin.ModelAdmin):
     list_display = ('organization_user','organization',)
-    pass
+
 
 @admin.register(GruppoInvitation)
 class GruppoInvitationAdmin(admin.ModelAdmin):
@@ -57,3 +75,9 @@ class GruppoInvitationAdmin(admin.ModelAdmin):
 
 #admin.site.register(Gruppo,GruppoAdmin)
 
+#Per rimuovere una app dalla lista app di django-admin; deve essere elencata prima della app che la
+#chiama in settings
+admin.site.unregister(models.Organization)
+admin.site.unregister(models.OrganizationInvitation)
+admin.site.unregister(models.OrganizationOwner)
+admin.site.unregister(models.OrganizationUser)

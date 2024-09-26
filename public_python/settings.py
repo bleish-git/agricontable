@@ -12,6 +12,13 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+from django.utils.translation import gettext_lazy as _
+from django.conf import settings
+
+""" 
+#Imposta per ogni utente loggato il relativo gruppo cui è connesso
+GRUPPO_UTENTE={}
+ """
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,6 +47,8 @@ else:
 # Application definition
 
 INSTALLED_APPS = [
+    'organizations',
+    'multigroup',
     'admin_interface',
     'colorfield',
     'anag_utenti.apps.AnagUtentiConfig',
@@ -54,10 +63,17 @@ INSTALLED_APPS = [
     'info.apps.InfoConfig',
     'mptt',
     'django_mptt_admin',
-    'organizations',
     'stdForm',
-    'multigroup',
+    'bootstrap_modal_forms',
+    
 ]
+
+if settings.DEBUG:
+    INSTALLED_APPS += ["debug_toolbar",]
+    INTERNAL_IPS = [
+        "127.0.0.1",
+    ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -68,14 +84,19 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'multigroup.middleware.GruppoMiddleware',
 ]
+if settings.DEBUG:
+    MIDDLEWARE = ["debug_toolbar.middleware.DebugToolbarMiddleware",]+MIDDLEWARE
+
+
 
 ROOT_URLCONF = 'public_python.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "public_python/templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -83,6 +104,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'multigroup.context_processors.custom_context'
             ],
         },
     },
@@ -154,6 +176,11 @@ USE_I18N = True
 
 USE_TZ = True
 
+LANGUAGES = [
+    ('it', _('Italian')),
+    ('en', _('English')),
+]
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
@@ -161,6 +188,9 @@ USE_TZ = True
 #STATIC_URL = 'static/'
 STATIC_URL = 'static/'
 MEDIA_URL = 'media/'
+
+# Valorizzata STATICFILES_DIRS occorre eseguire collestatic
+#STATICFILES_DIRS =  (os.path.join(BASE_DIR, 'assets'),)
 
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'public', 'static')
