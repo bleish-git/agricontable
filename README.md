@@ -1,6 +1,8 @@
-![logo](/logo_agricontable.png)
+![logo](/logo_agricontable2.png)
 
 Agricontable is an ERP software for medium and small companies, designed mainly for those operating in the primary sector and in product processing.
+
+WORK IN PROGRESS
 
 ## Feature
 - Multiuser/multigroup functionality
