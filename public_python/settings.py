@@ -15,11 +15,6 @@ import os
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 
-""" 
-#Imposta per ogni utente loggato il relativo gruppo cui è connesso
-GRUPPO_UTENTE={}
- """
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -184,11 +179,19 @@ LANGUAGES = [
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
+# https://docs.djangoproject.com/it/5.1/howto/static-files/deployment/
+# https://docs.djangoproject.com/it/5.1/howto/deployment/wsgi/modwsgi/#serving-files
+
+# Come per i template, per fare in modo che Django punti sul file corretto, occorre inserirlo in un namespace,
+# ovvero inserendolo dentro un’altra directory che abbia come nome 
+# il nome della app stessa: my_prog/static/app_del_progetto
 
 #STATIC_URL = 'static/'
 STATIC_URL = 'static/'
 MEDIA_URL = 'media/'
 
+# Quando gli asset statici che non sono legati ad una app particolare, oltre ad usare una directory static/ 
+# si può definire una lista di directory (STATICFILES_DIRS) dove Django cercherà ulteriormente i file statici.
 # Valorizzata STATICFILES_DIRS occorre eseguire collestatic
 #STATICFILES_DIRS =  (os.path.join(BASE_DIR, 'assets'),)
 
@@ -200,3 +203,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'public', 'media')
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#############################################################################à
+# Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Replace with your SMTP host
+EMAIL_HOST_USER = "gellebedde@gmail.com"  # Your email address
+EMAIL_HOST_PASSWORD = "your host password"  # Your email password
+EMAIL_PORT = 465  # SMTP port
+EMAIL_USE_SSL = True  # Use SSL for secure connection

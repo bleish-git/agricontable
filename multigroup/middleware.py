@@ -4,6 +4,8 @@ from .models import Gruppo
 
 
 class GruppoMiddleware(MiddlewareMixin):
+    pass    
+    """    
     def process_request(self, request):
         organization_id = self.get_organization_id(request)
         if organization_id:
@@ -22,3 +24,4 @@ class GruppoMiddleware(MiddlewareMixin):
         # se l'utente non è loggato
         else:
             request.organization = None
+    """

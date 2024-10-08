@@ -1,5 +1,27 @@
 {% extends "admin/change_list.html" %}
 {% load i18n admin_list admin_interface_tags %}
+
+{% block branding %}
+
+<table>
+    <tr>
+      <td>{{ block.super }}</td>
+    </tr>
+    <tr>
+        <td>
+           <h1><b>{{ gruppo_utente }}</b>
+              <button id="create-book" class="btn submit"  type="button" >Cambia</button>
+              <!-- <button hx-get="{% url 'multigroup:cambia_gruppo_modal' %}" hx-target="#dialog" class="btn btn-primary btn-sm">Cambia</button> -->
+              <!--<img src="/static/admin/img/icon-changelink.svg" alt="" width="20" height="20" title="Cambia Gruppo">-->
+            </h1>
+            </a>
+        </td>
+    </tr>
+  </table> 
+
+  <!-- Placeholder for the modal -->
+{% endblock %}
+
 {# copied from django 4.0.7 #}
 
       {% block filters %}
