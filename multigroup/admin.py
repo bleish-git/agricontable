@@ -83,8 +83,7 @@ class GruppoInvitationAdmin(admin.ModelAdmin):
     pass
 
 
-
-
+#TODO inserire filtro delle app non presenti nelle associazioni utenti-gruppi
 
 #admin.site.register(Gruppo,GruppoAdmin)
 
