@@ -46,8 +46,8 @@ class Gruppo(AbstractOrganization):
      
 
     class Meta:
-      verbose_name = "Gruppo"
-      verbose_name_plural = "Gruppi"
+      verbose_name = "Organizzazione"
+      verbose_name_plural = "Organizzazioni"
           
     def __str__(self):
         return str(self.nomeEsteso)
@@ -67,20 +67,20 @@ class GruppoUser(AbstractOrganizationUser):
 
 
     user_type = models.CharField("Categoria Utente",max_length=2,choices=USER_TYPE, default="GN")
-    gruppo_predefinito = models.BooleanField("Gruppo predefinito per l'utente")
-    permission = models.ManyToManyField(Permission)
+    gruppo_predefinito = models.BooleanField("Predefinita per l'utente")
+    permission = models.ManyToManyField(Permission, verbose_name='Abilitazioni')
 
     #objects = GruppoUserManager()
 
     class Meta:
-        verbose_name = "Associazione Utenti e Gruppi"
-        verbose_name_plural = "Utenti del Gruppo"
+        verbose_name = "Associazione Utenti ed Organizzazioni"
+        verbose_name_plural = "Utenti dell'organizzazione"
         unique_together = ('user', 'organization')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._meta.get_field('user').verbose_name = 'Utente'
-        self._meta.get_field('organization').verbose_name = 'Gruppo'  
+        self._meta.get_field('organization').verbose_name = 'Organizzazioni'  
         self._meta.get_field('permission').verbose_name = 'Abilitazioni'   
     #    self._meta.get_field('nomecompleto').verbose_name = 'Utente'   
 
@@ -94,8 +94,8 @@ class GruppoUser(AbstractOrganizationUser):
 class GruppoOwner(AbstractOrganizationOwner):
 
     class Meta:
-      verbose_name = "Proprietari dei Gruppi "
-      verbose_name_plural = "Proprietari dei Gruppi"
+      verbose_name = "Proprietari dell'Organizzazione "
+      verbose_name_plural = "Proprietari delle Organizzazioni"
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -110,8 +110,8 @@ class GruppoInvitation(AbstractOrganizationInvitation):
 
 
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+class Profilo(User):
+    #user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=500, blank=True)
     location = models.CharField(max_length=30, blank=True)
     birth_date = models.DateField(null=True, blank=True)
