@@ -1,6 +1,4 @@
 from django.shortcuts import render
-
-from django.shortcuts import render
 from django.http import HttpResponse
 import os, sys, platform, html, socket, django
 from django.conf import settings
@@ -9,7 +7,7 @@ try: from pip._internal.operations import freeze
 except ImportError: # pip < 10.0
     from pip.operations import freeze
 
-def pyinfo():
+def pyinfo(request):
     output  = '<!DOCTYPE html>\n'
     output += '<html>'
     output +=  '<head>'
@@ -35,6 +33,9 @@ def pyinfo():
 
     output +=     '<h2>Django Environment</h2>'
     output +=     section_django()
+
+    output +=     '<h2>Django Session</h2>'
+    output +=     section_django_session(request)
 
     output +=     '<h2>Database support</h2>'
     output +=     section_database()
@@ -226,9 +227,21 @@ def section_django():
     data += 'STATICFILES_DIRS', getattr(settings, "STATICFILES_DIRS", None)
     data += 'STATIC_ROOT', getattr(settings, "STATIC_ROOT", None)
     data += 'MEDIA_ROOT', getattr(settings, "MEDIA_ROOT", None)
+    data += 'TEMPLATE', getattr(settings, "TEMPLATES", None)
     #data += 'UrlPattern', urlpatterns
 
     return makecells(data)
+
+def section_django_session(request):
+    items = request.session.items()
+
+    # Iterazione sulle coppie chiave-valore
+    data  = []
+    for key, value in items:
+        data += key, value
+
+    return makecells(data)
+
 
 
 def section_multimedia():
@@ -269,5 +282,5 @@ for i in optional_modules_list:
 
 
 def index(request):
-    output = pyinfo()
+    output = pyinfo(request)
     return HttpResponse(output)

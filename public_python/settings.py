@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+from django.utils.translation import gettext_lazy as _
+from django.conf import settings
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,6 +42,8 @@ else:
 # Application definition
 
 INSTALLED_APPS = [
+    'organizations',
+    'multigroup',
     'admin_interface',
     'colorfield',
     'anag_utenti.apps.AnagUtentiConfig',
@@ -54,8 +58,17 @@ INSTALLED_APPS = [
     'info.apps.InfoConfig',
     'mptt',
     'django_mptt_admin',
-    'organizations',
+    'stdForm',
+    'bootstrap_modal_forms',
+    
 ]
+
+if settings.DEBUG:
+    INSTALLED_APPS += ["debug_toolbar",]
+    INTERNAL_IPS = [
+        "127.0.0.1",
+    ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -65,14 +78,20 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'multigroup.middleware.GruppoMiddleware',
 ]
+if settings.DEBUG:
+    MIDDLEWARE = ["debug_toolbar.middleware.DebugToolbarMiddleware",]+MIDDLEWARE
+
+
 
 ROOT_URLCONF = 'public_python.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "public_python/templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,6 +99,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'multigroup.context_processors.custom_context'
             ],
         },
     },
@@ -151,13 +171,30 @@ USE_I18N = True
 
 USE_TZ = True
 
+LANGUAGES = [
+    ('it', _('Italian')),
+    ('en', _('English')),
+]
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
+# https://docs.djangoproject.com/it/5.1/howto/static-files/deployment/
+# https://docs.djangoproject.com/it/5.1/howto/deployment/wsgi/modwsgi/#serving-files
+
+# Come per i template, per fare in modo che Django punti sul file corretto, occorre inserirlo in un namespace,
+# ovvero inserendolo dentro un’altra directory che abbia come nome 
+# il nome della app stessa: my_prog/static/app_del_progetto
 
 #STATIC_URL = 'static/'
 STATIC_URL = 'static/'
 MEDIA_URL = 'media/'
+
+# Quando gli asset statici che non sono legati ad una app particolare, oltre ad usare una directory static/ 
+# si può definire una lista di directory (STATICFILES_DIRS) dove Django cercherà ulteriormente i file statici.
+# Valorizzata STATICFILES_DIRS occorre eseguire collestatic
+#STATICFILES_DIRS =  (os.path.join(BASE_DIR, 'assets'),)
+
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'public', 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'public', 'media')
@@ -166,3 +203,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'public', 'media')
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#############################################################################à
+# Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Replace with your SMTP host
+EMAIL_HOST_USER = "gellebedde@gmail.com"  # Your email address
+EMAIL_HOST_PASSWORD = "your host password"  # Your email password
+EMAIL_PORT = 465  # SMTP port
+EMAIL_USE_SSL = True  # Use SSL for secure connection

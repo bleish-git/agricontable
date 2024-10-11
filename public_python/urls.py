@@ -19,25 +19,59 @@ from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from organizations.backends import invitation_backend
+from stdForm import views
+
+
+
+if settings.DEBUG:
+    from debug_toolbar.toolbar import debug_toolbar_urls
+
 
 #'from django.conf.urls.static import static' e '+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)'
-#sono aggiunti per il developmente con python manage.py runserver
+#sono aggiunti per il development con python manage.py runserver
 
 if settings.DEBUG:
     urlpatterns = [
         path('admin/', admin.site.urls),
         path('info/', include('info.urls')),
         path('anag/', include('anag_utenti.urls')),
-        path('info/', include('info.urls')),
         path('accounts/', include('organizations.urls')),
         path('invitations/', include(invitation_backend().get_urls())),
-    ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+        path('signup/', views.sign_up, name="signup"),
+        path('login/', views.user_login, name='login'),
+        path('profile/', views.user_profile, name='profile'),
+        path('logout/', views.user_logout, name='logout'),
+        path('changepassword/', views.user_change_password, name='changepassword'),
+        path('changepassword2/', views.user_change_password2, name='changepassword2'),
+        path('userdetail/<int:id>', views.user_detail, name='userdetail'), 
+        path('userdashboard/<int:id>/<int:idorg>', views.user_dashboard, name='userdashboard'), 
+    ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + debug_toolbar_urls()
+
 else:
     urlpatterns = [
         path('admin/', admin.site.urls),
         path('info/', include('info.urls')),
         path('anag/', include('anag_utenti.urls')),
-        path('info/', include('info.urls')),
         path('accounts/', include('organizations.urls')),
         path('invitations/', include(invitation_backend().get_urls())),
+        path('signup/', views.sign_up, name="signup"),
+        path('login/', views.user_login, name='login'),
+        path('profile/', views.user_profile, name='profile'),
+        path('logout/', views.user_logout, name='logout'),
+        path('changepassword/', views.user_change_password, name='changepassword'),
+        path('changepassword2/', views.user_change_password2, name='changepassword2'),
+        path('userdetail/<int:id>', views.user_detail, name='userdetail'), 
+        path('userdashboard/<int:id>/<int:idorg>', views.user_dashboard, name='userdashboard'), 
     ]
+#Language chooser requires 'django.middleware.locale.LocaleMiddleware' in your MIDDLEWARE to work and the following code
+urlpatterns += [re_path(r'^i18n/', include('django.conf.urls.i18n'))]    
+
+urlpatterns += [re_path('', include(('multigroup.urls','multigroup'), namespace='multigroup'))]
+
+
+
+
+
+
+
+

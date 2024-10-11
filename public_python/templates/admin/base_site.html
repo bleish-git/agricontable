@@ -1,0 +1,18 @@
+{% extends  "admin/base_site.html" %} 
+{% load i18n static admin_interface_tags %}
+
+
+{% block branding %}
+{% get_admin_interface_theme as theme %}
+{{ block.super }}
+{% endblock %}
+
+{% block welcome-msg %}
+{{ block.super }}
+
+{% endblock %}
+
+{% block userlinks %}
+{{ block.super }}
+
+{% endblock %}

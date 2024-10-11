@@ -1,10 +1,13 @@
 from django.db import models
 from datetime import date
+from multigroup.models import Gruppo
 
 class CategorieUtente(models.Model): 
+    gruppo = models.ForeignKey(Gruppo, on_delete=models.CASCADE)
     codiceCategoriaUtente = models.CharField("Categoria Utente",max_length=10)
     descrizioneCategoriaUtente = models.CharField("Descrizione",max_length=30)
     noteCategoriaUtente = models.CharField("Note",max_length=50,blank=True)
+
     def __str__(self):
         return self.descrizioneCategoriaUtente
 
@@ -14,9 +17,11 @@ class CategorieUtente(models.Model):
 
 
 class TipiUtente(models.Model):
+    gruppo = models.ForeignKey(Gruppo, on_delete=models.CASCADE)
     codiceTipoUtente = models.CharField("Tipo Utente",max_length=10)
     descrizioneTipoUtente = models.CharField("Descrizione",max_length=30)
     noteTipoUtente = models.CharField("Note",max_length=50,blank=True)
+    
     def __str__(self):
         return self.descrizioneTipoUtente
 
@@ -26,6 +31,7 @@ class TipiUtente(models.Model):
 
 
 class AnagColtura(models.Model):
+    gruppo = models.ForeignKey(Gruppo, on_delete=models.CASCADE)
     codiceTipoColtura = models.CharField("Codice Tipo Coltura",max_length=10)
     DescrColtura = models.CharField("Descrizione",max_length=30)
     NoteColtura = models.CharField("Note",max_length=50,blank=True)
@@ -39,6 +45,7 @@ class AnagColtura(models.Model):
 
 
 class AnagraficaUtenti(models.Model):
+    gruppo = models.ForeignKey(Gruppo, on_delete=models.CASCADE, related_name='anagraficautenti_gruppo')
     codice = models.IntegerField("Codice")
     cognome = models.CharField("Ragione sociale/Cognome",max_length=50)
     nome = models.CharField("Nome",max_length=50, blank=True)
@@ -81,7 +88,9 @@ class AnagraficaUtenti(models.Model):
 
         super().save(*args, **kwargs)
 
-    
+    def RagioneSociale(self):
+        return + self.cognome + " " + self.nome
+
     def __str__(self):
         return str(self.codice) + " - " + self.cognome + " " + self.nome
 
