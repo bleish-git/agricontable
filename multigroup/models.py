@@ -50,12 +50,12 @@ class Gruppo(AbstractOrganization):
       verbose_name_plural = "Organizzazioni"
           
     def __str__(self):
-        return str(self.nomeEsteso)
+        return str(self.id) +' - '+ str(self.nomeEsteso)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._meta.get_field('name').verbose_name = 'Sigla'
-        self._meta.get_field('is_active').verbose_name = "E' attivo?"
+        self._meta.get_field('is_active').verbose_name = "E' attiva?"
 
 #Viene associata per ogni gruppo/azienda la relativa lista di utenti
 class GruppoUser(AbstractOrganizationUser):
@@ -82,6 +82,7 @@ class GruppoUser(AbstractOrganizationUser):
         self._meta.get_field('user').verbose_name = 'Utente'
         self._meta.get_field('organization').verbose_name = 'Organizzazioni'  
         self._meta.get_field('permission').verbose_name = 'Abilitazioni'   
+        self._meta.get_field('is_admin').verbose_name = 'Admin?' 
     #    self._meta.get_field('nomecompleto').verbose_name = 'Utente'   
 
     def nomecompleto(self):

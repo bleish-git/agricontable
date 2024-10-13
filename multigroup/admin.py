@@ -11,7 +11,6 @@ from django.urls import resolve
 
 class UserInline(admin.TabularInline):
     model = GruppoUser
-    #formset = UserInlineFormset
     extra = 1
     #autocomplete_fields = ['user']
 
@@ -22,7 +21,7 @@ class UserInline(admin.TabularInline):
     class Meta:
         verbose_name_plural = "Lista utenti"
 
-
+    
 class PostForm(forms.ModelForm):
     def get_queryset(request):
         qs = super().get_queryset(request)
@@ -49,7 +48,7 @@ class GruppoAdmin(admin.ModelAdmin):
     form = PostForm
     inlines = [UserInline]
     ordering = ['nomeEsteso']
-    list_display = ('name','nomeEsteso','is_active')
+    list_display = ('name','id','nomeEsteso','is_active')
     list_filter = ('nomeEsteso',)
 
     def get_queryset(self, request):

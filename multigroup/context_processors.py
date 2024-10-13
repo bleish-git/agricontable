@@ -4,8 +4,8 @@ def custom_context(request):
     session = request.session
     us = GruppoUser.objects.filter(user_id = request.user.id).filter(gruppo_predefinito=1).first()
     
-    #TODO inserire nell'elif un context che nasconda il pulsante cambia, in quanto vuol dire che l'utente 
-    #si sta loggando o ha fatto logout e non ha senso vederel il pulsante
+    #TODO inserire nell'elif un context che avvii un sistema di definizione di un gruppo predefinito per l'utente che si registra
+    #oppure al momento del primo login
 
     if not 'gruppo_utente' in request.session and hasattr(us,'organization_id'):
         request.session['gruppo_utente']=us.organization_id
