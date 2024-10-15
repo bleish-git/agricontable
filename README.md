@@ -15,3 +15,4 @@ WORK IN PROGRESS
 
 Agricontable is a new brand and probably has bugs. Please try it on your project and let me know how it goes. I am keen to refine it.
 
+![Visitor Count](https://profile-counter.glitch.me/bleish-git/count.svg)
