@@ -1,0 +1,21 @@
+{
+    "version": "1.0.0",
+    "tasks": [
+        {
+            "label": "Run python env",
+            "type": "shell",
+            "linux": {
+                "command": "source /home/bleish/Scrivania/dev5/.env/bin/activate"
+            },
+            "group": "none",
+            "presentation": {
+                "reveal": "always",
+
+            },
+            "runOptions": {
+                "runOn": "folderOpen"
+            },
+            "problemMatcher": []
+        }
+    ]
+}
