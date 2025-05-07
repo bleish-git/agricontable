@@ -15,6 +15,7 @@ WORK IN PROGRESS
 
 Agricontable is a new brand and probably has bugs. Please try it on your project and let me know how it goes. I am keen to refine it.
 
+<<<<<<< HEAD
 
 ## License
 
@@ -24,3 +25,6 @@ This software uses the MIT License
 
 ![Visitor Count](https://profile-counter.glitch.me/bleish-git/count.svg)
 
+=======
+![Visitor Count](https://profile-counter.glitch.me/bleish-git/count.svg)
+>>>>>>> d7efd23c37535d8cb39803d02163bc624a904dc8
