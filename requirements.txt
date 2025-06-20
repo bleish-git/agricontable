@@ -21,14 +21,14 @@ decorator==5.1.1
 defusedxml==0.7.1
 deptry==0.20.0
 Django==5.0.6
-django-admin-interface==0.28.8
-django-bootstrap-modal-forms==3.0.4
+django-admin-interface==0.28.9
+django-bootstrap-modal-forms==3.0.5
 django-colorfield==0.11.0
 django-debug-toolbar==4.4.6
 django-extensions==3.2.3
 django-js-asset==2.2.0
 django-mptt==0.16.0
-django-mptt-admin==2.6.2
+django-mptt-admin==2.7.0
 django-organizations==2.4.1
 exceptiongroup==1.2.2
 executing==2.0.1

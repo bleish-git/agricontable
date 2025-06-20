@@ -177,6 +177,7 @@ def section_database():
     data += 'MSSQL (adodbapi)',           imported('adodbapi')
     data += 'MySQL (MySQL-Python)',       imported('MySQLdb')
     data += 'MySQL (Python Connector)',   imported('mysql.connector')
+    data += 'MySQL (MySQL/MariaDB mysqlclient)',imported('MySQLdb')
     data += 'ODBC (mxODBC)',              imported('mxODBC')
     data += 'Oracle (cx_Oracle)',         imported('cx_Oracle')
     data += 'PostgreSQL (PyGreSQL)',      imported('pgdb')
